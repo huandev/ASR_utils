@@ -1,5 +1,8 @@
 # -*- coding:utf-8 -*-
 """
+python2
+1.对uttid排序
+2.构建特征文件
 usage: 
 	path_wavs:data_TTS/wav/standardTTS
 	path_create:data_TTS/fbank/test
