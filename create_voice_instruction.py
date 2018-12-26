@@ -8,7 +8,7 @@ import sys
 is_rename = True
 
 
-auth = Voice("LTAIUp2zPycUnpcu","URByxbA11mBf18dKcVJWUo5mJ7DRyF")
+auth = Voice("ALIYUNACCESSID", "ALIYUNACCESSKEY")
 """
 text = "爸爸，我不回家吃饭了"
 #filename="test1"
