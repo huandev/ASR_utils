@@ -148,12 +148,22 @@ def create_some_instructions(path_instructions):
                 print(text)
            
             auth.save_voice(text, os.path.join(dir_save_voices, filename), encode_type=encode_type, voice_name=voice_name)
-    print("------{} records-------".format(i))
+    print("------{} records-------".format(i+1))
+
+
+def create_voice():
+    print("ok")
+    while 1:
+        text = raw_input("Text: ")
+        filename = raw_input("filename: ")
+        #filename = "".join(text) + "_TTS.wav"
+        auth.save_voice(text, os.path.join(dir_save_voices, filename), encode_type=encode_type, voice_name=voice_name)
 
 if __name__ == "__main__":
     #create_nonum_instructions()
     #create_num_instructions_normal()
     #create_num_instructions_single()
     #create_num_instructions_special()
-    path_instructions = "standardTTS3"
+    path_instructions = "data/errors_TTS_man"
     create_some_instructions(path_instructions)
+    #create_voice()
