@@ -5,7 +5,7 @@ import sys
 import re
 import copy
 
-script, dir_result, name_log = sys.argv
+script, dir_decode_result, path_errors_log = sys.argv
 threshold_dist = 10
 default_instruction = "DEFAULT"
 pinyin_table =  "pinyin_table_TTS_man" #"standard_pinyin_table"  #"pinyin_table_audio_AI"
@@ -119,10 +119,12 @@ def get_predicted_instruction(_text):
             min_dist = dist_tmp
             sim_instruction = instruction
             sim_pinyin = pinyin
+        """
         else:
             min_dist = dist_tmp
             sim_instruction = instruction
             sim_pinyin = pinyin
+        """
     if min_dist > threshold_dist or len(_pinyin_text) < 3:
         sim_instruction = default_instruction
 
@@ -148,7 +150,7 @@ def get_true_label():
     """
     true_chars = dict()
     #path_true_chars = os.path.join("results","decode_test_" + name_result, "scoring_kaldi/test_filt.txt")
-    path_true_chars = os.path.join(dir_result, "scoring_kaldi/test_filt.txt")
+    path_true_chars = os.path.join(dir_decode_result, "scoring_kaldi/test_filt.txt")
     #path_true_chars = "results/decode_test_audio_2/scoring_kaldi/test_filt.txt"
     #print("results/decode_test_audio_2/scoring_kaldi/test_filt.txt")
     with open(path_true_chars, "r") as f2:
@@ -175,7 +177,7 @@ def evaluate():
     audio_2_停止_3_audio2 亭子  
     """
     #path_pred_chars = os.path.join("results","decode_test_" + name_result, "scoring_kaldi/penalty_0.0/7.txt")
-    path_pred_chars = os.path.join(dir_result, "scoring_kaldi/penalty_0.0/7.txt")
+    path_pred_chars = os.path.join(dir_decode_result, "scoring_kaldi/penalty_0.0/7.txt")
     with open(path_pred_chars, "r") as f:
         for line in f.readlines():
             line_tmp = line.strip().split(" ")
@@ -215,7 +217,7 @@ def evaluate():
     true_chars = get_true_label()
     count_error = 0
     count_ignore = 0
-    f_log = open("uttids_" + name_log, "w")
+    f_save_errors = open(path_errors_log, "w")
     for utt_id, v in pred_dist.items():
         sim_instruction = v["instruction"]
         pinyin = v["pinyin"]
@@ -225,7 +227,7 @@ def evaluate():
         if sim_instruction == default_instruction:
             count_ignore += 1
         elif true_chars[utt_id] != sim_instruction:
-            f_log.write(utt_id + "\n")
+            f_save_errors.write(utt_id + "\n")
             print("utt_id:{}. It's pinyin is {}. It's raw pinyin is {}.It's text is {}.".format(utt_id, pinyin, pinyin_raw, text))
             print("Predicted instruction is: {}. True instruction is {}".format(sim_instruction, true_chars[utt_id]))
             print("Distance is: {} \n".format(dist))
