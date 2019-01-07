@@ -13,9 +13,11 @@ import sys
 instructions = ["开始测试","暂停","退出","选择第一行","运行","停止","单次触发","正常模式","放大水平时基","放大垂直分辨率","放大采样间隔","放大存储深度","缩小水平时基","缩小垂直分辨率","缩小采样间隔","缩小存储深度","打开时钟工具","打开电源工具","打开通用信号工具","打开I方C工具","打开MIIM工具","打开SPI工具","打开localbus工具","打开DDR工具","打开flash工具","打开时序工具","选择第一行"]
 
 def create_files_wav(dir_wavs, dir_create, prefix_utt=None):
+    """
     if "00030" in dir_wavs:
         print("Don't change 00030, it's sample of cvte")
         return
+    """
     path_text = os.path.join(dir_create, "text")
     path_wavscp = os.path.join(dir_create, "wav.scp")
     path_utt2spk = os.path.join(dir_create, "utt2spk")
@@ -25,7 +27,8 @@ def create_files_wav(dir_wavs, dir_create, prefix_utt=None):
     f_utt2spk = open(path_utt2spk, "w")
     if not prefix_utt:
         #print(dir_wavs)
-        prefix_utt = dir_wavs.strip().split('/')[2]
+        prefix_utt = dir_wavs.strip("/").split('/')[-1]
+            
         #print(prefix_utt)
     map_utt = {}
     for filename in os.listdir(dir_wavs):
